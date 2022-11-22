@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div>
+    <h1>REGISTER / LOGIN</h1>
+    <div>
+        <h2>Sign Up</h2>
+        <form action="/signup/" method="POST">
+            {% csrf_token %}
+            <input name="username" type="text" placeholder="Username" />
+            <input name="email" type="email" placeholder="Enter Email" />
+            <input name="password" type="password" placeholder="Password" />
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+    <div>
+        <h2>Log In</h2>
+        <form action="/login/" method="POST">
+            {% csrf_token %}
+            <input name="username" type="text" placeholder="Enter username" />
+            <input name="password" type="password" placeholder="Password" />
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

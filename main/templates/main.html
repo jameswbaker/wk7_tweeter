@@ -9,5 +9,45 @@ title
 {% endblock %}
 
 {% block body %}
-<h1>hello!</h1>
+<h1>Hello, {{ user.username }}!</h1>
+<a href="/logout"><button>Logout</button></a>
+
+<br />
+<br />
+
+<div>
+    <form method="POST" action="/">
+        {% csrf_token %}
+        <h2>Tweet something!</h2>
+        <input name="body" placeholder="What's on your mind :DD">
+        <input type="submit" value="post tweet">
+    </form>
+</div>
+
+<br />
+
+<div>
+    {% for tweet in tweets %}
+    <div class="tweet-card">
+      <p>
+        <br />
+        <strong>{{ tweet.author.username }}</strong> |
+        <i>{{ tweet.created_at }}</i>
+      </p>
+      <p>{{ tweet.body }}</p>
+
+      <p><a href="/like?id={{tweet.id}}">
+        {% if request.user in tweet.likes.all %}
+            unlike
+        {% else %}
+            like
+        {% endif %}
+      </a> ({{ tweet.likes.count }} &hearts;) </p>
+
+      {% if tweet.author == user %}
+        <a href="delete?id={{tweet.id}}">Delete Tweet</a>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
 {% endblock %}
